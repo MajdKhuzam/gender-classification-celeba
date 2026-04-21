@@ -6,7 +6,8 @@ import os
 from data_loader import load_data
 from evaluate import predicted_labels
 
-DATA_DIR = os.path.join(__file__, 'Data', 'gender-recognition-200k-images-celeba', 'Dataset')
+# DATA_DIR = os.path.join(__file__, '../Data', 'gender-recognition-200k-images-celeba', 'Dataset')
+DATA_DIR = '/home/majd/Desktop/Gender Classification CNN - CelebA/Data/gender-recognition-200k-images-celeba/Dataset'
 TEST_PATH = os.path.join(DATA_DIR, 'Test')
 
 test_images, test_labels = load_data(TEST_PATH,128,128)

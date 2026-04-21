@@ -7,8 +7,10 @@ from data_loader import load_data
 
 # ── Configuration ─────────────────────────────────────────────────────────────
 
-DATA_BASE_DIR = os.path.join(__file__, 'Data', 'gender-recognition-200k-images-celeba', 'Dataset')
-MODEL_SAVE_PATH = os.getenv(__file__, 'gender_classification_model.keras')
+# DATA_BASE_DIR = os.path.join(__file__, "..", 'Data', 'gender-recognition-200k-images-celeba', 'Dataset')
+DATA_BASE_DIR = '/home/majd/Desktop/Gender Classification CNN - CelebA/Data/gender-recognition-200k-images-celeba/Dataset'
+# MODEL_SAVE_PATH = os.path.join(__file__, "..", 'Data', 'gender_classification_model.keras')
+MODEL_SAVE_PATH = '/home/majd/Desktop/Gender Classification CNN - CelebA/Data'
 IMG_WIDTH  = 128
 IMG_HEIGHT = 128
 
