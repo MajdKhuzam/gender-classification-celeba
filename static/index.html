@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GenderScan · CNN Gender Classifier</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ── Header ───────────────────────────────────────────────────────────── -->
+<header>
+  <div class="logo-icon">
+    <svg viewBox="0 0 24 24" stroke-width="1.8">
+      <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+      <path d="M19 3l2 2-2 2M5 3L3 5l2 2" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div>
+    <div class="logo-text">GENDER SCAN</div>
+    <div class="logo-sub">CNN GENDER CLASSIFICATION</div>
+  </div>
+  <div class="header-right">
+    <div class="stat-chip">ACCURACY<span>98.04%</span></div>
+    <div class="stat-chip">DATASET<span>200K</span></div>
+    <div class="stat-chip">INPUT<span>128 × 128</span></div>
+  </div>
+</header>
+
+<!-- ── Main grid ─────────────────────────────────────────────────────────── -->
+<main>
+
+  <!-- Upload panel -->
+  <div class="panel">
+    <div class="panel-label">INPUT · IMAGE UPLOAD</div>
+
+    <div id="drop-zone">
+      <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/bmp" />
+      <svg class="dz-icon" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"/>
+        <polyline points="16 12 12 8 8 12"/>
+        <line x1="12" y1="8" x2="12" y2="20"/>
+        <rect x="2" y="3" width="20" height="14" rx="2" stroke-dasharray="3 2"/>
+      </svg>
+      <div class="dz-title">Drop image here</div>
+      <div class="dz-sub">or click to browse · JPEG · PNG · WebP · BMP</div>
+    </div>
+
+    <div id="preview-wrap">
+      <img id="preview-img" alt="preview" />
+      <div class="br"></div>
+      <div class="scan-overlay" id="scan-overlay"><div class="scan-line"></div></div>
+      <div class="file-name" id="file-name-label"></div>
+    </div>
+
+    <button id="btn-classify" disabled>
+      <svg class="btn-icon" viewBox="0 0 24 24" stroke-width="1.8">
+        <circle cx="11" cy="11" r="7"/>
+        <path d="M21 21l-3.5-3.5" stroke-linecap="round"/>
+        <path d="M8 11h6M11 8v6" stroke-linecap="round"/>
+      </svg>
+      ANALYSE IMAGE
+    </button>
+  </div>
+
+  <!-- Result panel -->
+  <div class="panel" id="result-panel">
+    <div class="panel-label">OUTPUT · CLASSIFICATION</div>
+
+    <div id="gender-readout">
+      <div id="gender-label">———</div>
+      <div id="confidence-pct">AWAITING INPUT</div>
+
+      <div class="conf-bar-wrap">
+        <div class="conf-bar-labels">
+          <span>FEMALE ◀</span>
+          <span>▶ MALE</span>
+        </div>
+        <div class="conf-track"><div id="conf-fill"></div></div>
+      </div>
+    </div>
+
+    <div class="metrics">
+      <div class="metric-cell">
+        <div class="m-key">RAW SIGMOID</div>
+        <div class="m-val" id="m-sigmoid">—</div>
+      </div>
+      <div class="metric-cell">
+        <div class="m-key">DECISION</div>
+        <div class="m-val" id="m-decision">—</div>
+      </div>
+      <div class="metric-cell">
+        <div class="m-key">CONFIDENCE</div>
+        <div class="m-val" id="m-conf">—</div>
+      </div>
+      <div class="metric-cell">
+        <div class="m-key">THRESHOLD</div>
+        <div class="m-val" id="m-thresh">≥ 0.50</div>
+      </div>
+    </div>
+
+    <!-- Log terminal -->
+    <div class="panel" id="log-panel" style="margin-top:20px; padding:14px 16px;">
+      <div class="panel-label" style="margin-bottom:10px;">SYSTEM LOG</div>
+      <div id="log-body">
+        <div class="log-line">
+          <span class="log-ts" id="init-ts"></span>
+          <span class="log-info">System initialised. Awaiting image input.</span>
+        </div>
+        <div class="log-line" style="align-items:center;">
+          <span class="log-ts"></span>
+          <span class="log-info"><span class="cursor"></span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── Footer ────────────────────────────────────────────────────────────── -->
+<footer>
+  <span><span class="dot-alive"></span>SERVER ONLINE · FastAPI + TensorFlow</span>
+  <span>CelebA · CNN · Binary Cross-Entropy · Adam</span>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
