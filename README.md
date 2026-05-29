@@ -1,6 +1,6 @@
 # Gender Classification CNN – CelebA
 
-A binary gender classifier (Female / Male) built with a custom CNN in TensorFlow/Keras, trained on the [CelebA Gender Recognition 200K Images](https://www.kaggle.com/datasets/ashishjangra27/gender-recognition-200k-images-celeba) dataset.
+A binary gender classifier (Female / Male) built with a custom CNN in TensorFlow/Keras, trained on the [CelebA Gender Recognition 200K Images](https://www.kaggle.com/datasets/ashishjangra27/gender-recognition-200k-images-celeba) dataset. Includes a FastAPI web server with a drag-and-drop UI for real-time inference.
 
 [![Kaggle Notebook](https://kaggle.com/static/images/open-in-kaggle.svg)](https://www.kaggle.com/code/majdkhuzam/gender-classification-cnn-celeba)
 
@@ -10,11 +10,17 @@ A binary gender classifier (Female / Male) built with a custom CNN in TensorFlow
 
 ```
 gender-classification-cnn-celeba/
-├── src/
-│   ├── data_loader.py   # Dataset loading & preprocessing
-│   ├── train.py         # CNN architecture + training entry-point
-│   ├── evaluate.py      # Evaluation & metrics
-│   └── visualize.py     # Prediction visualisation (3×3 grid)
+├── data_loader.py            # Dataset loading & preprocessing
+├── train.py                  # CNN architecture + training
+├── evaluate.py               # Evaluation & metrics
+├── visualize.py              # Prediction visualisation (3×3 grid)
+├── main.py                   # FastAPI web server (/predict, /health, static UI)
+├── static/
+│   ├── index.html            # Drag-and-drop web interface
+│   ├── main.js               # Front-end logic
+│   └── styles.css            # Styles
+├── output/
+│   └── gender_classification_model.keras
 ├── requirements.txt
 └── .gitignore
 ```
@@ -40,6 +46,8 @@ gender-classification-cnn-celeba/
 ## Setup
 
 ```bash
+git clone https://github.com/MajdKhuzam/gender-classification-celeba
+cd gender-classification-celeba
 pip install -r requirements.txt
 ```
 
@@ -49,6 +57,12 @@ pip install -r requirements.txt
 
 Download from Kaggle:
 [ashishjangra27/gender-recognition-200k-images-celeba](https://www.kaggle.com/datasets/ashishjangra27/gender-recognition-200k-images-celeba)
+
+Extract into the project root so the path is:
+
+```
+Data/gender-recognition-200k-images-celeba/Dataset/
+```
 
 Expected directory layout:
 
@@ -60,7 +74,7 @@ Dataset/
 ├── Test/
 │   ├── Female/
 │   └── Male/
-└── Validation/
+└── Valid/
     ├── Female/
     └── Male/
 ```
@@ -72,13 +86,15 @@ Dataset/
 ### 1. Train
 
 ```bash
-python src/train.py
+python train.py
 ```
+
+Saves the trained model to `output/gender_classification_model.keras`.
 
 ### 2. Evaluate
 
 ```bash
-python src/evaluate.py
+python evaluate.py
 ```
 
 Prints test loss, accuracy, a full classification report, and a confusion matrix.
@@ -86,12 +102,28 @@ Prints test loss, accuracy, a full classification report, and a confusion matrix
 ### 3. Visualise predictions
 
 ```bash
-python src/visualize.py
+python visualize.py
 ```
 
 Displays a 3×3 grid of random test images. Green title = correct prediction, red = incorrect.
 
-![Sample Predictions](sample_predictions.png)
+
+### 4. Web server (inference API + UI)
+
+```bash
+python main.py
+```
+
+Then open http://localhost:8000 in your browser.
+
+**API endpoints:**
+
+| Endpoint | Method | Description |
+|---|---|---|
+| `/predict` | POST | Upload an image file; returns `{ label, confidence, raw_probability }` |
+| `/health` | GET | Server health check (`{ status, model_loaded }`) |
+
+The root path serves a cyberpunk-themed web UI with drag-and-drop image upload and live classification results.
 
 ---
 
@@ -135,3 +167,6 @@ Evaluated on **20,001 test images** from the CelebA dataset.
 | opencv-python | 4.13.0 |
 | scikit-learn | 1.6.1 |
 | matplotlib | 3.10.0 |
+| fastapi | 0.136.3 |
+| uvicorn | 0.48.0 |
+| python-multipart | 0.0.29 |
