@@ -3,6 +3,8 @@
 A binary gender classifier (Female / Male) built with a custom CNN in TensorFlow/Keras, trained on the [CelebA Gender Recognition 200K Images](https://www.kaggle.com/datasets/ashishjangra27/gender-recognition-200k-images-celeba) dataset. Includes a FastAPI web server with a drag-and-drop UI for real-time inference.
 
 [![Kaggle Notebook](https://kaggle.com/static/images/open-in-kaggle.svg)](https://www.kaggle.com/code/majdkhuzam/gender-classification-cnn-celeba)
+[![Hugging Face Space](https://img.shields.io/badge/🤗%20Hugging%20Face-Space-blue)](https://huggingface.co/spaces/MajdKhuzam/gender-classification-celeba)
+[![Live Demo](https://img.shields.io/badge/🚀%20Live-Demo-brightgreen)](https://huggingface.co/spaces/MajdKhuzam/gender-classification-celeba)
 
 ---
 
@@ -15,6 +17,7 @@ gender-classification-cnn-celeba/
 ├── evaluate.py               # Evaluation & metrics
 ├── visualize.py              # Prediction visualisation (3×3 grid)
 ├── main.py                   # FastAPI web server (/predict, /health, static UI)
+├── Dockerfile                # Container image definition
 ├── static/
 │   ├── index.html            # Drag-and-drop web interface
 │   ├── main.js               # Front-end logic
@@ -50,6 +53,15 @@ git clone https://github.com/MajdKhuzam/gender-classification-celeba
 cd gender-classification-celeba
 pip install -r requirements.txt
 ```
+
+---
+## Pre-trained Model
+
+A trained model is available on Hugging Face — no dataset or training required:
+
+[Download gender_classification_model.keras](https://huggingface.co/spaces/MajdKhuzam/gender-classification-celeba/blob/main/output/gender_classification_model.keras)
+
+Place it at `output/gender_classification_model.keras` to use with `evaluate.py` or `main.py`.
 
 ---
 
@@ -114,7 +126,7 @@ Displays a 3×3 grid of random test images. Green title = correct prediction, re
 python main.py
 ```
 
-Then open http://localhost:8000 in your browser.
+Then open http://localhost:7860 in your browser.
 
 **API endpoints:**
 
@@ -164,9 +176,12 @@ Evaluated on **20,001 test images** from the CelebA dataset.
 |---|---|
 | tensorflow | 2.19.0 |
 | numpy | 2.0.2 |
-| opencv-python | 4.13.0 |
+| opencv-python-headless | 4.12.0.88 |
 | scikit-learn | 1.6.1 |
 | matplotlib | 3.10.0 |
 | fastapi | 0.136.3 |
 | uvicorn | 0.48.0 |
 | python-multipart | 0.0.29 |
+| gunicorn | 23.0.0 |
+
+
